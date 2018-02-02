@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>List of workers</title>
+</h:head>
+
+<h:body>
+    <h:form id="list">
+        <p:growl id="growl" life="2000"/>
+
+
+        <p:panel header="Lista pracowników">
+            <p:dataTable value="#{workerList.list}" var="worker">
+                <p:column headerText="Nazwisko">
+                    <h:outputText value="#{worker.lastName}"/>
+                </p:column>
+                <p:column headerText="Imie">
+                    <h:outputText value="#{worker.firstName}"/>
+                </p:column>
+                <p:column headerText="Rok urodzenia">
+                    <h:outputText value="#{worker.birthYear}"/>
+                </p:column>
+                <p:column headerText="Stanowisko">
+                    <h:outputText value="#{worker.position}"/>
+                </p:column>
+                <p:column headerText="Wynagrodzenie">
+                    <h:outputText value="#{worker.salary} PLN"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+        </p:panel>
+
+        <p:panel header="Dodaj pracownika">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Imie:"/>
+                <p:inputText value="#{workerList.newWorker.firstName}" required="true"/>
+                <h:outputLabel value="Nazwisko:"/>
+                <p:inputText value="#{workerList.newWorker.lastName}" required="true"/>
+                <h:outputLabel value="Rok urodzenia:"/>
+                <p:inputText value="#{workerList.newWorker.birthYear}" required="true"/>
+                <h:outputLabel value="Stanowisko:"/>
+                <p:inputText value="#{workerList.newWorker.position}" required="true"/>
+                <h:outputLabel value="Wynagrodzenie:"/>
+                <p:inputText value="#{workerList.newWorker.salary}" required="true"/>
+
+            </h:panelGrid>
+
+
+            <p:commandButton value="Dodaj" id="ajax" update="list" action="#{workerList.addNewWorker}"/>
+
+
+        </p:panel>
+
+    </h:form>
+</h:body>
+</html>

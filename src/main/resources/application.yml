@@ -1,0 +1,6 @@
+server:
+  context-path: /workers
+  port: 9090
+jsf:
+  primefaces:
+    theme: delta
