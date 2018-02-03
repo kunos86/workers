@@ -1,6 +1,7 @@
 package pl.sda.web;
 
 
+import pl.sda.dao.WorkersDAO;
 import pl.sda.dto.Worker;
 
 import javax.annotation.PostConstruct;
@@ -15,25 +16,21 @@ import java.util.List;
 @ManagedBean(name = "workerList")
 public class WorkersListManagedBean {
 
-    private List<Worker> workers = new ArrayList<>();
     private Worker newWorker = new Worker();
+    private WorkersDAO workersDAO = new WorkersDAO();
 
-    @PostConstruct
-    public void init() {
-        //TODO: usunąć po przepięciu na bazę
-        workers.add(new Worker("Jan", "Kowalski", "Developer", 5000, 1985));
-    }
+
 
 
     public List<Worker> getList() {
-        //TODO: wczytać pracowników z bazy
-        return workers;
+        return workersDAO.getAllWorkes();
     }
 
     public void addNewWorker() {
         // dodać pracownika do bazy
 
-        workers.add(newWorker);
+        workersDAO.saveWorker(newWorker);
+
         newWorker = new Worker();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -41,7 +38,18 @@ public class WorkersListManagedBean {
     }
 
 
+    public void deleteWorker(int id) {
+        // dodać pracownika do bazy
+        workersDAO.deleteWorker(id);
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Usunięto pracownika z id: " + id));
+    }
+
+
     public Worker getNewWorker() {
         return newWorker;
     }
+
+
 }

@@ -31,11 +31,17 @@
                 <p:column headerText="Wynagrodzenie">
                     <h:outputText value="#{worker.salary} PLN"/>
                 </p:column>
+                <p:column headerText="Akcja">
+                    <p:commandButton value="Usuń" update="list" action="#{workerList.deleteWorker(worker.id)}"/>
+
+                </p:column>
 
 
             </p:dataTable>
 
         </p:panel>
+    </h:form>
+    <h:form id="addForm">
 
         <p:panel header="Dodaj pracownika">
             <h:panelGrid columns="2">
@@ -53,7 +59,7 @@
             </h:panelGrid>
 
 
-            <p:commandButton value="Dodaj" id="ajax" update="list" action="#{workerList.addNewWorker}"/>
+            <p:commandButton value="Dodaj" id="ajax" update="list,addForm" action="#{workerList.addNewWorker}"/>
 
 
         </p:panel>

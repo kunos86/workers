@@ -1,6 +1,7 @@
 package pl.sda.dto;
 
 public class Worker {
+    private Integer id;
     private String firstName;
     private String lastName;
     private String position;
@@ -11,7 +12,8 @@ public class Worker {
     }
 
 
-    public Worker(String firstName, String lastName, String position, Integer salary, int birthYear) {
+    public Worker(Integer id, String firstName, String lastName, String position, Integer salary, Integer birthYear) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
@@ -59,6 +61,14 @@ public class Worker {
         this.birthYear = birthYear;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,20 +76,22 @@ public class Worker {
 
         Worker worker = (Worker) o;
 
-        if (salary != worker.salary) return false;
-        if (birthYear != worker.birthYear) return false;
+        if (id != null ? !id.equals(worker.id) : worker.id != null) return false;
         if (firstName != null ? !firstName.equals(worker.firstName) : worker.firstName != null) return false;
         if (lastName != null ? !lastName.equals(worker.lastName) : worker.lastName != null) return false;
-        return position != null ? position.equals(worker.position) : worker.position == null;
+        if (position != null ? !position.equals(worker.position) : worker.position != null) return false;
+        if (salary != null ? !salary.equals(worker.salary) : worker.salary != null) return false;
+        return birthYear != null ? birthYear.equals(worker.birthYear) : worker.birthYear == null;
     }
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + salary;
-        result = 31 * result + birthYear;
+        result = 31 * result + (salary != null ? salary.hashCode() : 0);
+        result = 31 * result + (birthYear != null ? birthYear.hashCode() : 0);
         return result;
     }
 }
