@@ -1,6 +1,9 @@
 package pl.sda.dto;
 
+import java.util.Objects;
+
 public class Worker {
+    private Long id;
     private String firstName;
     private String lastName;
     private String position;
@@ -10,13 +13,21 @@ public class Worker {
     public Worker() {
     }
 
-
-    public Worker(String firstName, String lastName, String position, Integer salary, int birthYear) {
+    public Worker(Long id, String firstName, String lastName, String position, Integer salary, Integer birthYear) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
         this.salary = salary;
         this.birthYear = birthYear;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -63,23 +74,18 @@ public class Worker {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Worker worker = (Worker) o;
-
-        if (salary != worker.salary) return false;
-        if (birthYear != worker.birthYear) return false;
-        if (firstName != null ? !firstName.equals(worker.firstName) : worker.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(worker.lastName) : worker.lastName != null) return false;
-        return position != null ? position.equals(worker.position) : worker.position == null;
+        return Objects.equals(id, worker.id) &&
+                Objects.equals(firstName, worker.firstName) &&
+                Objects.equals(lastName, worker.lastName) &&
+                Objects.equals(position, worker.position) &&
+                Objects.equals(salary, worker.salary) &&
+                Objects.equals(birthYear, worker.birthYear);
     }
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + salary;
-        result = 31 * result + birthYear;
-        return result;
+
+        return Objects.hash(id, firstName, lastName, position, salary, birthYear);
     }
 }

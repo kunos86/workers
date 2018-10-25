@@ -3,7 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
     <title>List of workers</title>
@@ -31,33 +31,44 @@
                 <p:column headerText="Wynagrodzenie">
                     <h:outputText value="#{worker.salary} PLN"/>
                 </p:column>
-
-
+                <p:column headerText="">
+                    <p:commandButton value="Usuń" id="delete" update="list"
+                                     action="${workerList.deleteWorker(worker.id)}">
+                    </p:commandButton>
+                </p:column>
             </p:dataTable>
 
         </p:panel>
 
-        <p:panel header="Dodaj pracownika">
-            <h:panelGrid columns="2">
-                <h:outputLabel value="Imie:"/>
-                <p:inputText value="#{workerList.newWorker.firstName}" required="true"/>
-                <h:outputLabel value="Nazwisko:"/>
-                <p:inputText value="#{workerList.newWorker.lastName}" required="true"/>
-                <h:outputLabel value="Rok urodzenia:"/>
-                <p:inputText value="#{workerList.newWorker.birthYear}" required="true"/>
-                <h:outputLabel value="Stanowisko:"/>
-                <p:inputText value="#{workerList.newWorker.position}" required="true"/>
-                <h:outputLabel value="Wynagrodzenie:"/>
-                <p:inputText value="#{workerList.newWorker.salary}" required="true"/>
-
-            </h:panelGrid>
-
-
-            <p:commandButton value="Dodaj" id="ajax" update="list" action="#{workerList.addNewWorker}"/>
-
-
+        <p:panel>
+            <p:commandButton value="Dodaj pracownika" type="button" onclick="PF('popupNew').show();"/>
         </p:panel>
 
     </h:form>
+    <p:dialog id="addNewPopup" header="Dodaj Pracownika" widgetVar="popupNew" modal="true" height="300">
+        <h:form id="addNewForm">
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Imie:"/>
+                    <p:inputText value="#{workerList.newWorker.firstName}" required="true"/>
+                    <h:outputLabel value="Nazwisko:"/>
+                    <p:inputText value="#{workerList.newWorker.lastName}" required="true"/>
+                    <h:outputLabel value="Rok urodzenia:"/>
+                    <p:inputText value="#{workerList.newWorker.birthYear}" required="true"/>
+                    <h:outputLabel value="Stanowisko:"/>
+                    <p:inputText value="#{workerList.newWorker.position}" required="true"/>
+                    <h:outputLabel value="Wynagrodzenie:"/>
+                    <p:inputText value="#{workerList.newWorker.salary}" required="true"/>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Dodaj" id="ajax" update="list,addNewPopup" action="#{workerList.addNewWorker}"
+                                 onclick="PF('popupNew').close();"/>
+
+
+            </p:panel>
+
+        </h:form>
+    </p:dialog>
 </h:body>
 </html>
