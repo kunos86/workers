@@ -8,13 +8,17 @@ public interface WorkerDao {
 
     List<Worker> getAllWorkes();
 
-    Worker getWorker(int idWorker);
+    List<Worker> getByLastName(String lastName);
 
-    void deleteWorker(int workerId);
+    Worker getWorker(long idWorker);
+
+    void deleteWorker(long  workerId);
 
     void saveWorker(Worker worker);
 
     void updateWorker(Worker worker);
+
+
 
 
 
