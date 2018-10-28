@@ -1,5 +1,6 @@
 package pl.sda.dao;
 
+import pl.sda.dto.Task;
 import pl.sda.dto.Worker;
 
 import java.sql.*;
@@ -78,7 +79,12 @@ public class WorkerJdbcDao implements WorkerDao {
     }
 
     @Override
-    public List<Worker> getByLastName(String lastName) {
+    public List<Worker> getByFilter(String lastName) {
         return null;
+    }
+
+    @Override
+    public void saveTask(Task task) {
+
     }
 }

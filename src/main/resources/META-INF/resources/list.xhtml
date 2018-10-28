@@ -13,9 +13,16 @@
     <h:form id="list">
         <p:growl id="growl" life="2000"/>
 
-
         <p:panel header="Lista pracowników">
+
+            <p:inputText value="#{workerList.filterValue}"/>
+            <p:commandButton value="Refresh" id="refresh" update="list">
+            </p:commandButton>
+
             <p:dataTable value="#{workerList.list}" var="worker">
+                <p:column style="width:16px">
+                <p:rowToggler />
+            </p:column>
                 <p:column headerText="Nazwisko">
                     <h:outputText value="#{worker.lastName}"/>
                 </p:column>
@@ -33,9 +40,21 @@
                 </p:column>
                 <p:column headerText="">
                     <p:commandButton value="Usuń" id="delete" update="list"
-                                     action="${workerList.deleteWorker(worker.id)}">
-                    </p:commandButton>
+                                     action="${workerList.deleteWorker(worker.id)}"/>
+                    <p:commandButton value="Dodaj zadanie" id="addTask" action="#{workerList.editWorker(worker.id)}"  onclick="PF('popupNewTask').show();"/>
                 </p:column>
+
+
+                <p:rowExpansion>
+                    <p:dataTable value="#{worker.tasks}" var="task">
+                        <p:column headerText="Opis">
+                            <h:outputText value="#{task.desctiption}"/>
+                        </p:column>
+                        <p:column headerText="Czas">
+                            <h:outputText value="#{task.estimatedTime}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:rowExpansion>
             </p:dataTable>
 
         </p:panel>
@@ -70,5 +89,28 @@
 
         </h:form>
     </p:dialog>
+
+
+    <p:dialog id="addNewTaskPopup" header="Dodaj task" widgetVar="popupNewTask" modal="true" height="300">
+        <h:form id="addNewTaskForm">
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Opis:"/>
+                    <p:inputText value="#{workerList.newTask.desctiption}" required="true"/>
+                    <h:outputLabel value="Szacowany czas:"/>
+                    <p:inputText value="#{workerList.newTask.estimatedTime}" required="true"/>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Dodaj" id="ajax" update="list,addNewTaskPopup" action="#{workerList.addNewTask}"
+                                 onclick="PF('popupNewTask').close();"/>
+
+
+            </p:panel>
+
+        </h:form>
+    </p:dialog>
+
+
 </h:body>
 </html>

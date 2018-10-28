@@ -1,12 +1,20 @@
 package pl.sda.dto;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 
 @Entity
-@Table(name ="worker")
-@NamedQuery(name = "getAll", query = "from Worker")
+@Table(name = "worker")
+@NamedQueries({
+        @NamedQuery(name = "getAll", query = "from Worker"),
+        @NamedQuery(name = "getByFilter", query = "from Worker " +
+                "where lastName like :filter or firstName like :filter or position like :filter")
+})
 public class Worker {
 
     @Id
@@ -28,6 +36,13 @@ public class Worker {
 
     @Column(name = "birthYear")
     private Integer birthYear;
+
+
+    @OneToMany(mappedBy = "worker",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Task> tasks;
 
     public Worker() {
     }
@@ -87,6 +102,14 @@ public class Worker {
 
     public void setBirthYear(Integer birthYear) {
         this.birthYear = birthYear;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

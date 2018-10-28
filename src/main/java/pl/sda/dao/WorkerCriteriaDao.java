@@ -4,16 +4,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.DistinctRootEntityResultTransformer;
 import pl.sda.dto.Task;
 import pl.sda.dto.Worker;
 
 import java.util.List;
 
-public class WorkerJpqlDao implements WorkerDao{
+public class WorkerCriteriaDao implements WorkerDao{
 
     private SessionFactory sessionFactory;
 
-    public WorkerJpqlDao(){
+    public WorkerCriteriaDao(){
         sessionFactory = new Configuration().configure().buildSessionFactory();
 
     }
@@ -24,19 +28,17 @@ public class WorkerJpqlDao implements WorkerDao{
     public List<Worker> getAllWorkes() {
         List<Worker> workers;
         Session session = sessionFactory.openSession();
-//        workers = session.createNamedQuery("getAll", Worker.class).getResultList();
-        workers = session.createQuery("from Worker", Worker.class).getResultList();
+        workers = session.createCriteria(Worker.class)
+                .addOrder(Order.asc("lastName"))
+                .setResultTransformer(DistinctRootEntityResultTransformer.INSTANCE)
+                .list();
         session.close();
         return workers;
     }
 
     @Override
     public Worker getWorker(long idWorker) {
-        Worker workers;
-        Session session = sessionFactory.openSession();
-        workers = session.get(Worker.class, idWorker);
-        session.close();
-        return workers;
+        return null;
     }
 
     @Override
@@ -63,36 +65,24 @@ public class WorkerJpqlDao implements WorkerDao{
     }
 
     @Override
-    public void saveTask(Task task) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-
-
-        session.save(task);
-
-        tx.commit();
-        session.close();
-    }
-
-    @Override
     public void updateWorker(Worker worker) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.update(worker);
-        tx.commit();
-        session.close();
+
     }
 
     @Override
     public List<Worker> getByFilter(String filter) {
         List<Worker> workers;
-
-
         Session session = sessionFactory.openSession();
-        workers = session.createNamedQuery("getByFilter", Worker.class)
-                .setParameter("filter","%"+filter + "%")
-                .getResultList();
+        workers = session.createCriteria(Worker.class).add(Restrictions.or(
+                Restrictions.like("lastName", filter, MatchMode.ANYWHERE),
+                Restrictions.like("firstName", filter, MatchMode.ANYWHERE),
+                Restrictions.like("position", filter, MatchMode.ANYWHERE))).list();
         session.close();
         return workers;
+    }
+
+    @Override
+    public void saveTask(Task task) {
+
     }
 }
