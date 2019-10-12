@@ -8,9 +8,9 @@ public interface WorkerDao {
 
     List<Worker> getAllWorkes();
 
-    Worker getWorker(int idWorker);
+    Worker getWorker(long idWorker);
 
-    void deleteWorker(int workerId);
+    void deleteWorker(long workerId);
 
     void saveWorker(Worker worker);
 
