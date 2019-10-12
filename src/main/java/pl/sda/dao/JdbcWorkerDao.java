@@ -45,6 +45,25 @@ public class JdbcWorkerDao implements WorkerDao {
     @Override
     public void saveWorker(Worker worker) {
 
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/workers",
+                "dbuser", "dbpass")) {
+
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO `worker`" +
+                    "(`birthYear`,`first_name`,`last_name`,`position`,`salary`) " +
+                    "VALUES (?,?,?,?,?)");
+
+            statement.setInt(1, worker.getBirthYear());
+            statement.setString(2, worker.getFirstName());
+            statement.setString(3, worker.getLastName());
+            statement.setString(4, worker.getPosition());
+            statement.setInt(5, worker.getSalary());
+            statement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
