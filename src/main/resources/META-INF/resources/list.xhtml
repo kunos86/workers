@@ -13,6 +13,19 @@
     <h:form id="list">
         <p:growl id="growl" life="2000"/>
 
+        <p:panel id="filter" header="Wyszukiwanie" >
+            <h:panelGrid columns="2">
+                <h:outputLabel id="fnLabel" for="fnFilter" value="Imię"/>
+                <h:inputText id="fnFilter" value="#{workerList.filter.firstName}"/>
+
+                <h:outputLabel id="lnLabel" for="lnFilter" value="Nazwisko"/>
+                <h:inputText id="lnFilter" value="#{workerList.filter.lastName}"/>
+
+                <p:commandButton id="filterButton" update="list"   action="#{workerList.doFilter()}" value="Szukaj"/>
+                <p:commandButton id="cleanButton" update="list"   action="#{workerList.doClean()}" value="Wyczyść"/>
+            </h:panelGrid>
+        </p:panel>
+
         <h:outputText value="#{workerList.count}"/>
 
          <p:panel header="Lista pracowników">

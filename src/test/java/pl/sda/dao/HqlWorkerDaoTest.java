@@ -18,8 +18,13 @@ public class HqlWorkerDaoTest {
 
         HqlWorkerDao hqlWorkerDao = new HqlWorkerDao();
 
+        long countBeforeAdd = hqlWorkerDao.countWorkers();
 
         hqlWorkerDao.saveWorker(worker);
+
+        long countAfterAdd = hqlWorkerDao.countWorkers();
+
+        Assert.assertEquals(countBeforeAdd+1, countAfterAdd);
 
         List<Worker> list = hqlWorkerDao.getAllWorkes();
         Assert.assertTrue(list.size() > 0);

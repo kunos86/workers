@@ -23,10 +23,28 @@ public class HqlWorkerDao implements WorkerDao {
         }
     }
 
+    @Override
+    public List<Worker> getWorkers(Worker filter) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            return session.createQuery("from Worker w WHERE w.firstName like 'K%'").list();
+
+
+        }
+    }
+
 
     @Override
-    public long countWorkers() {
-        return 0;
+    public long countWorkers(){
+
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            return (Long) session.createQuery("select count(w) from Worker w").getSingleResult();
+
+
+        }
+
     }
 
     @Override

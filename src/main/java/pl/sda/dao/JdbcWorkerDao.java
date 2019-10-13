@@ -33,6 +33,11 @@ public class JdbcWorkerDao implements WorkerDao {
     }
 
     @Override
+    public List<Worker> getWorkers(Worker filter) {
+        return null;
+    }
+
+    @Override
     public long countWorkers() {
         long count = 0;
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/workers",

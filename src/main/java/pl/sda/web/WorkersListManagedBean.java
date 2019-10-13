@@ -16,11 +16,20 @@ import java.util.List;
 public class WorkersListManagedBean {
 
     private Worker newWorker = new Worker();
+    private Worker filter = new Worker();
+
+    private boolean isFilteringEnabled = false;
+
+
+
     private WorkerDao workerDao = new HqlWorkerDao();
 
 
     public List<Worker> getList() {
-        return workerDao.getAllWorkes();
+
+
+
+        return isFilteringEnabled ? workerDao.getWorkers(filter) : workerDao.getAllWorkes();
     }
 
     public long getCount() {
@@ -50,7 +59,26 @@ public class WorkersListManagedBean {
     }
 
 
+    public void doFilter() {
+        isFilteringEnabled=true;
+
+
+    }
+
+
+    public void doClean() {
+        isFilteringEnabled=false;
+        filter = new Worker();
+
+    }
+
+
+
     public Worker getNewWorker() {
         return newWorker;
+    }
+
+    public Worker getFilter() {
+        return filter;
     }
 }

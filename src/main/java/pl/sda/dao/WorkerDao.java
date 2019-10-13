@@ -8,6 +8,11 @@ public interface WorkerDao {
 
     List<Worker> getAllWorkes();
 
+
+    List<Worker> getWorkers(Worker filter);
+
+
+
     long countWorkers();
 
     Worker getWorker(long idWorker);
