@@ -13,8 +13,9 @@
     <h:form id="list">
         <p:growl id="growl" life="2000"/>
 
+        <h:outputText value="#{workerList.count}"/>
 
-        <p:panel header="Lista pracowników">
+         <p:panel header="Lista pracowników">
             <p:dataTable value="#{workerList.list}" var="worker">
                 <p:column headerText="Nazwisko">
                     <h:outputText value="#{worker.lastName}"/>

@@ -8,6 +8,8 @@ public interface WorkerDao {
 
     List<Worker> getAllWorkes();
 
+    long countWorkers();
+
     Worker getWorker(long idWorker);
 
     void deleteWorker(long workerId);

@@ -12,7 +12,7 @@ public class JdbcWorkerDaoTest {
     public void testInsert() {
         WorkerDao workerDao = new JdbcWorkerDao();
 
-        List<Worker> listBefore = workerDao.getAllWorkes();
+        long countBefore = workerDao.countWorkers();
 
         Worker worker = new Worker();
         worker.setFirstName("Jan");
@@ -22,9 +22,8 @@ public class JdbcWorkerDaoTest {
 
 
         workerDao.saveWorker(worker);
-        List<Worker> listAfter = workerDao.getAllWorkes();
-
-        Assert.assertEquals(listBefore.size() + 1, listAfter.size());
+        long countAfter = workerDao.countWorkers();
+        Assert.assertEquals(countBefore + 1, countAfter);
 
     }
 

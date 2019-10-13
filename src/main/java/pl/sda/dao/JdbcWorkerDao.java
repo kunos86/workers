@@ -33,12 +33,33 @@ public class JdbcWorkerDao implements WorkerDao {
     }
 
     @Override
+    public long countWorkers() {
+        long count = 0;
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/workers",
+                "dbuser", "dbpass")) {
+            PreparedStatement statement = connection.prepareStatement("Select count(*) as licznik from worker");
+           ResultSet rs =  statement.executeQuery();
+
+           while (rs.next()){
+               count = rs.getLong(1);
+           }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+        }
+
+    @Override
     public Worker getWorker(long idWorker) {
         return null;
     }
 
     @Override
     public void deleteWorker(long workerId) {
+
+
 
     }
 
