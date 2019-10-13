@@ -1,7 +1,7 @@
 package pl.sda.web;
 
 
-import pl.sda.dao.JdbcWorkerDao;
+import pl.sda.dao.HqlWorkerDao;
 import pl.sda.dao.WorkerDao;
 import pl.sda.dto.Worker;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class WorkersListManagedBean {
 
     private Worker newWorker = new Worker();
-    private WorkerDao workerDao = new JdbcWorkerDao();
+    private WorkerDao workerDao = new HqlWorkerDao();
 
 
     public List<Worker> getList() {

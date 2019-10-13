@@ -1,13 +1,31 @@
 package pl.sda.dto;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+
+@Entity
+@Table(name = "worker")
 public class Worker {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "position")
     private String position;
+
+    @Column(name = "salary")
     private Integer salary;
+
+    @Column(name = "birthYear")
     private Integer birthYear;
 
     public Worker() {
