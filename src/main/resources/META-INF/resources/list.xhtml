@@ -21,6 +21,12 @@
                 <h:outputLabel id="lnLabel" for="lnFilter" value="Nazwisko"/>
                 <h:inputText id="lnFilter" value="#{workerList.filter.lastName}"/>
 
+                <h:outputLabel id="posLabel" for="posFilter" value="Stanowisko"/>
+                <h:inputText id="posFilter" value="#{workerList.filter.position}"/>
+
+                <h:outputLabel id="ruLabel" for="ruFilter" value="Rok urodzenia"/>
+                <h:inputText id="ruFilter" value="#{workerList.filter.lastName}"/>
+
                 <p:commandButton id="filterButton" update="list"   action="#{workerList.doFilter()}" value="Szukaj"/>
                 <p:commandButton id="cleanButton" update="list"   action="#{workerList.doClean()}" value="Wyczyść"/>
             </h:panelGrid>
