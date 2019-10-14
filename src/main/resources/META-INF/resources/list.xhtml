@@ -26,9 +26,8 @@
             </h:panelGrid>
         </p:panel>
 
-        <h:outputText value="#{workerList.count}"/>
 
-         <p:panel header="Lista pracowników">
+         <p:panel header="Lista pracowników - #{workerList.count} rekordów w bazie">
             <p:dataTable value="#{workerList.list}" var="worker">
                 <p:column headerText="Nazwisko">
                     <h:outputText value="#{worker.lastName}"/>

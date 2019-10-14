@@ -27,7 +27,10 @@ public class HqlWorkerDao implements WorkerDao {
     public List<Worker> getWorkers(Worker filter) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-            return session.createQuery("from Worker w WHERE w.firstName like 'K%'").list();
+            return session.createQuery("from Worker w WHERE w.firstName like :firstName and w.lastName like :lastName")
+                    .setParameter("firstName", filter.getFirstName()+"%" )
+                    .setParameter("lastName", filter.getLastName()+"%" )
+                    .list();
 
 
         }
