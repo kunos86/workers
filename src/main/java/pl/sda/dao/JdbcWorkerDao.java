@@ -8,11 +8,15 @@ import java.util.List;
 
 public class JdbcWorkerDao implements WorkerDao {
 
+    private Connection getConnection() throws SQLException{
+        return  DriverManager.getConnection("jdbc:mysql://localhost:3306/workers",
+                "dbuser", "dbpass");
+    }
+
     @Override
     public List<Worker> getAllWorkes() {
         List<Worker> list = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/workers",
-                "dbuser", "dbpass")) {
+        try (Connection connection = getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement("Select * from worker");
             ResultSet rs = statement.executeQuery();
@@ -40,8 +44,7 @@ public class JdbcWorkerDao implements WorkerDao {
     @Override
     public long countWorkers() {
         long count = 0;
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/workers",
-                "dbuser", "dbpass")) {
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("Select count(*) as licznik from worker");
            ResultSet rs =  statement.executeQuery();
 
@@ -71,8 +74,7 @@ public class JdbcWorkerDao implements WorkerDao {
     @Override
     public void saveWorker(Worker worker) {
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/workers",
-                "dbuser", "dbpass")) {
+        try (Connection connection = getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement("INSERT INTO `worker`" +
                     "(`birthYear`,`first_name`,`last_name`,`position`,`salary`) " +
