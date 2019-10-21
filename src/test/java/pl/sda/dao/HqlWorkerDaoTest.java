@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import pl.sda.dto.Worker;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class HqlWorkerDaoTest {
@@ -15,8 +16,9 @@ public class HqlWorkerDaoTest {
         worker.setLastName("Kowalski");
         worker.setBirthYear(1998);
         worker.setSalary(20000);
+        worker.setStartDate(Calendar.getInstance().getTime());
 
-        HqlWorkerDao hqlWorkerDao = new HqlWorkerDao();
+        WorkerDao hqlWorkerDao = new CriteriaWorkerDao();
 
         long countBeforeAdd = hqlWorkerDao.countWorkers();
 
@@ -24,9 +26,10 @@ public class HqlWorkerDaoTest {
 
         long countAfterAdd = hqlWorkerDao.countWorkers();
 
-        Assert.assertEquals(countBeforeAdd+1, countAfterAdd);
+        Assert.assertEquals(countBeforeAdd + 1, countAfterAdd);
 
         List<Worker> list = hqlWorkerDao.getAllWorkes();
+        list.forEach(System.out::println);
         Assert.assertTrue(list.size() > 0);
 
         Long idNewAddedWorker = worker.getId();

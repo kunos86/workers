@@ -1,7 +1,9 @@
 package pl.sda.dto;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -28,16 +30,27 @@ public class Worker {
     @Column(name = "birthYear")
     private Integer birthYear;
 
+
+    @Column(name = "start_date")
+    @Temporal(value = TemporalType.DATE)
+    private Date startDate;
+
+    @OneToMany(mappedBy = "worker",
+    cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private Set<Task> tasks;
+
     public Worker() {
     }
 
-    public Worker(Long id, String firstName, String lastName, String position, Integer salary, Integer birthYear) {
-        this.id = id;
+    public Worker(String firstName, String lastName, String position, Integer salary, Integer birthYear, Date startDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
         this.salary = salary;
         this.birthYear = birthYear;
+        this.startDate = startDate;
     }
 
     public Long getId() {
@@ -88,6 +101,35 @@ public class Worker {
         this.birthYear = birthYear;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    @Override
+    public String toString() {
+        return "Worker{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", position='" + position + '\'' +
+                ", salary=" + salary +
+                ", birthYear=" + birthYear +
+                ", startDate=" + startDate +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,12 +140,12 @@ public class Worker {
                 Objects.equals(lastName, worker.lastName) &&
                 Objects.equals(position, worker.position) &&
                 Objects.equals(salary, worker.salary) &&
-                Objects.equals(birthYear, worker.birthYear);
+                Objects.equals(birthYear, worker.birthYear) &&
+                Objects.equals(startDate, worker.startDate);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, firstName, lastName, position, salary, birthYear);
+        return Objects.hash(id, firstName, lastName, position, salary, birthYear, startDate);
     }
 }

@@ -3,13 +3,13 @@ package pl.sda.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import pl.sda.dto.Worker;
 import pl.sda.util.HibernateUtil;
 
 import java.util.List;
 
-public class HqlWorkerDao implements WorkerDao {
+public class CriteriaWorkerDao implements WorkerDao {
 
 
     @Override
@@ -17,10 +17,8 @@ public class HqlWorkerDao implements WorkerDao {
 
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            return session.createQuery("from Worker").list();
-
-
+            return session.createCriteria(Worker.class)
+                    .list();
         }
     }
 
@@ -28,10 +26,11 @@ public class HqlWorkerDao implements WorkerDao {
     public List<Worker> getWorkers(Worker filter) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-            return session.createQuery("from Worker w WHERE w.firstName like :firstName and w.lastName like :lastName")
-                    .setParameter("firstName", filter.getFirstName() + "%")
-                    .setParameter("lastName", filter.getLastName() + "%")
+            return session.createCriteria(Worker.class)
+                    .add(Restrictions.like("firstName", filter.getFirstName()))
+                    .add(Restrictions.like("LastName", filter.getLastName()))
                     .list();
+
 
 
         }
@@ -39,13 +38,10 @@ public class HqlWorkerDao implements WorkerDao {
 
 
     @Override
-    public long countWorkers() {
-
+    public long countWorkers(){
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            return (Long) session.createCriteria(Worker.class).setProjection(Projections.rowCount()).uniqueResult();
-
+            return (Long) session.createQuery("select count(w) from Worker w").getSingleResult();
         }
 
     }
@@ -53,9 +49,7 @@ public class HqlWorkerDao implements WorkerDao {
     @Override
     public Worker getWorker(long idWorker) {
 
-
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-
         try (Session session = sessionFactory.openSession()) {
             return session.get(Worker.class, idWorker);
         }
