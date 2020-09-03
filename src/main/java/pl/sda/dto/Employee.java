@@ -2,7 +2,7 @@ package pl.sda.dto;
 
 import java.util.Objects;
 
-public class Worker {
+public class Employee {
     private Long id;
     private String firstName;
     private String lastName;
@@ -10,10 +10,10 @@ public class Worker {
     private Integer salary;
     private Integer birthYear;
 
-    public Worker() {
+    public Employee() {
     }
 
-    public Worker(Long id, String firstName, String lastName, String position, Integer salary, Integer birthYear) {
+    public Employee(Long id, String firstName, String lastName, String position, Integer salary, Integer birthYear) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -74,18 +74,17 @@ public class Worker {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Worker worker = (Worker) o;
-        return Objects.equals(id, worker.id) &&
-                Objects.equals(firstName, worker.firstName) &&
-                Objects.equals(lastName, worker.lastName) &&
-                Objects.equals(position, worker.position) &&
-                Objects.equals(salary, worker.salary) &&
-                Objects.equals(birthYear, worker.birthYear);
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id) &&
+                Objects.equals(firstName, employee.firstName) &&
+                Objects.equals(lastName, employee.lastName) &&
+                Objects.equals(position, employee.position) &&
+                Objects.equals(salary, employee.salary) &&
+                Objects.equals(birthYear, employee.birthYear);
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, firstName, lastName, position, salary, birthYear);
     }
 }

@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-    <title>List of workers</title>
+    <title>Lista pracowników</title>
 </h:head>
 
 <h:body>
@@ -15,25 +15,25 @@
 
 
         <p:panel header="Lista pracowników">
-            <p:dataTable value="#{workerList.list}" var="worker">
+            <p:dataTable value="#{employeeList.list}" var="employee">
                 <p:column headerText="Nazwisko">
-                    <h:outputText value="#{worker.lastName}"/>
+                    <h:outputText value="#{employee.lastName}"/>
                 </p:column>
                 <p:column headerText="Imie">
-                    <h:outputText value="#{worker.firstName}"/>
+                    <h:outputText value="#{employee.firstName}"/>
                 </p:column>
                 <p:column headerText="Rok urodzenia">
-                    <h:outputText value="#{worker.birthYear}"/>
+                    <h:outputText value="#{employee.birthYear}"/>
                 </p:column>
                 <p:column headerText="Stanowisko">
-                    <h:outputText value="#{worker.position}"/>
+                    <h:outputText value="#{employee.position}"/>
                 </p:column>
                 <p:column headerText="Wynagrodzenie">
-                    <h:outputText value="#{worker.salary} PLN"/>
+                    <h:outputText value="#{employee.salary} PLN"/>
                 </p:column>
                 <p:column headerText="">
                     <p:commandButton value="Usuń" id="delete" update="list"
-                                     action="${workerList.deleteWorker(worker.id)}">
+                                     action="${employeeList.deleteEmployee(employee.id)}">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
@@ -50,24 +50,22 @@
             <p:panel>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Imie:"/>
-                    <p:inputText value="#{workerList.newWorker.firstName}" required="true"/>
+                    <p:inputText value="#{employeeList.newEmployee.firstName}" required="true"/>
                     <h:outputLabel value="Nazwisko:"/>
-                    <p:inputText value="#{workerList.newWorker.lastName}" required="true"/>
+                    <p:inputText value="#{employeeList.newEmployee.lastName}" required="true"/>
                     <h:outputLabel value="Rok urodzenia:"/>
-                    <p:inputText value="#{workerList.newWorker.birthYear}" required="true"/>
+                    <p:inputText value="#{employeeList.newEmployee.birthYear}" required="true"/>
                     <h:outputLabel value="Stanowisko:"/>
-                    <p:inputText value="#{workerList.newWorker.position}" required="true"/>
+                    <p:inputText value="#{employeeList.newEmployee.position}" required="true"/>
                     <h:outputLabel value="Wynagrodzenie:"/>
-                    <p:inputText value="#{workerList.newWorker.salary}" required="true"/>
+                    <p:inputText value="#{employeeList.newEmployee.salary}" required="true"/>
 
                 </h:panelGrid>
 
-                <p:commandButton value="Dodaj" id="ajax" update="list,addNewPopup" action="#{workerList.addNewWorker}"
+                <p:commandButton value="Dodaj" id="ajax" update="list,addNewPopup" action="#{employeeList.addNewEmployee}"
                                  onclick="PF('popupNew').close();"/>
 
-
             </p:panel>
-
         </h:form>
     </p:dialog>
 </h:body>

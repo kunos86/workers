@@ -1,5 +1,5 @@
 server:
-  context-path: /workers
+  context-path: /employees
   port: 9090
 jsf:
   primefaces:
